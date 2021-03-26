@@ -5,5 +5,7 @@ baseDir = os.path.dirname(os.path.dirname(__file__))
 # print(baseDir)
 
 # 数据库配置文件相对于工程根目录的相对路径
-config_filePath = baseDir + "\\public\\db_config.ini"
+config_filePath = os.path.join(baseDir,"public/db_config.ini")
+# config_filePath = baseDir + "public/db_config.ini"
+
 # print(config_filePath)

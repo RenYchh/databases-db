@@ -1,19 +1,19 @@
-#encoding=utf-8
+# encoding=utf-8
 import pymysql
+
 from Util.config_handler import ConfigParse
 
-from utils.config_handler import ConfigParse
 
 class DB(object):
     def __init__(self):
         self.db_conf = ConfigParse().get_db_conf()
         self.conn = pymysql.connect(
-            host = self.db_conf["host"],
-            port = int(self.db_conf["port"]),
-            user = self.db_conf["user"],
-            password = self.db_conf["password"],
-            database = self.db_conf["db"],
-            charset = "utf8"
+            host=self.db_conf["host"],
+            port=int(self.db_conf["port"]),
+            user=self.db_conf["user"],
+            password=self.db_conf["password"],
+            database=self.db_conf["db"],
+            charset="utf8"
         )
         self.cur = self.conn.cursor()
 
@@ -34,32 +34,33 @@ class DB(object):
             raise err
 
     def get_api_case(self, api_id):
-        sqlStr = "select * from interface_test_case where api_id=%s and status=1" %api_id
+        sqlStr = "select * from interface_test_case where api_id=%s and status=1" % api_id
         self.cur.execute(sqlStr)
         api_case_list = list(self.cur.fetchall())
         return api_case_list
 
     def get_rely_data(self, api_id, case_id):
         print(api_id, case_id)
-        sqlStr = "select data_store from interface_data_store where api_id=%s and case_id=%s" %(api_id, case_id)
+        sqlStr = "select data_store from interface_data_store where api_id=%s and case_id=%s" % (api_id, case_id)
         self.cur.execute(sqlStr)
         # 字典对象
         rely_data = eval((self.cur.fetchall())[0][0])
         return rely_data
 
     def write_store_data(self, api_id, case_id, data_store):
-        sqlStr = "select * from interface_data_store where api_id=%s and case_id=%s" %(api_id, case_id)
+        sqlStr = "select * from interface_data_store where api_id=%s and case_id=%s" % (api_id, case_id)
         self.cur.execute(sqlStr)
         query_result = self.cur.fetchall()
         if query_result:
-            sqlStr = "update interface_data_store set data_store='%s' where api_id=%s and case_id=%s" %(data_store, api_id, case_id)
+            sqlStr = "update interface_data_store set data_store='%s' where api_id=%s and case_id=%s" % (
+                data_store, api_id, case_id)
             self.cur.execute(sqlStr)
             self.conn.commit()
         else:
-            sqlStr = "insert into interface_data_store(api_id, case_id, data_store) values(%s, %s, '%s')" %(data_store, api_id, case_id)
+            sqlStr = "insert into interface_data_store(api_id, case_id, data_store) values(%s, %s, '%s')" % (
+                data_store, api_id, case_id)
             self.cur.execute(sqlStr)
             self.conn.commit()
-
 
 
 if __name__ == '__main__':
@@ -67,4 +68,4 @@ if __name__ == '__main__':
     # print(db.get_api_list())
     # print(db.get_api_case(1))
     # print(db.get_rely_data(2,2))
-    db.write_store_data(1,1, "d")
+    db.write_store_data(1, 1, "d")

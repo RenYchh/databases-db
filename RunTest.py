@@ -3,6 +3,7 @@ from action.get_rely import get_rely_data
 from Util.HttpClient import HttpClient
 from action.data_store import rely_data_store
 
+
 def main():
     db = DB()
     apiList = db.get_api_list()
@@ -22,8 +23,6 @@ def main():
             # 接下来进行数据依赖存储
             if responseObj.status_code == 200:
                 rely_data_store(api[0], case[0], api[1], case[6], request_data, responseObj.json())
-
-
 
 
 if __name__ == "__main__":
