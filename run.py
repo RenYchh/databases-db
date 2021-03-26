@@ -18,7 +18,7 @@ def main():
     result = BeautifulReport(test_suite)
     report = (current_time + ".html")
     result.report(filename=report,
-                  description='广告投放自动化测试',
+                  description='媒资仓接口自动化测试',
                   report_dir=report_path,
                   theme='theme_cyan')
     print("用例执行完毕！")
