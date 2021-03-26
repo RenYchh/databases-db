@@ -6,6 +6,7 @@ import time
 import unittest
 import os
 from BeautifulReport import BeautifulReport
+from Util.current_mail import MyEmail
 
 root_path = os.path.dirname(os.path.realpath(__file__))
 case_path = os.path.join(root_path, "cases")
@@ -22,6 +23,7 @@ def main():
                   report_dir=report_path,
                   theme='theme_cyan')
     print("用例执行完毕！")
+    MyEmail().send()
 
 
 if __name__ == '__main__':
